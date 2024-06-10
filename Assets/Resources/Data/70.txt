@@ -1,0 +1,88 @@
+
+{
+    "ID" : 70,
+    "RoomID" : 5,
+    "PuzzleID" : 10,
+    "MinimumStepsCount" : 14,
+    "RoomName"          : "HATHOR ",
+    "InscriptionStonePositionRed" : {
+        "x" : 0.0,
+        "y" : 2.0
+    },
+    "InscriptionStonePositionBlue" : {
+        "x" : 2.0,
+        "y" : 4.0
+    },
+    "InscriptionStonePositionYellow" : {
+        "x" : 0.0,
+        "y" : 0.0
+    },
+    "InscriptionStoneTargetPositionRed" : {
+        "x" : 5.0,
+        "y" : 4.0
+    },
+    "InscriptionStoneTargetPositionBlue" : {
+        "x" : 5.0,
+        "y" : 2.0
+    },
+    "InscriptionStoneTargetPositionYellow" : {
+        "x" : 0.0,
+        "y" : 0.0
+    },
+    "MobilStonesPositions"                 : [
+        {
+            "x" : 1.0,
+            "y" : 0.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 0.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 3.0
+        },
+        {
+            "x" : 3.0,
+            "y" : 4.0
+        }
+    ],
+    "StaticStonesPositions"                : [
+        {
+            "x" : 1.0,
+            "y" : 1.0
+        },
+        {
+            "x" : 1.0,
+            "y" : 2.0
+        },
+        {
+            "x" : 1.0,
+            "y" : 3.0
+        },
+        {
+            "x" : 1.0,
+            "y" : 4.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 2.0
+        },
+        {
+            "x" : 6.0,
+            "y" : 1.0
+        },
+        {
+            "x" : 6.0,
+            "y" : 2.0
+        },
+        {
+            "x" : 6.0,
+            "y" : 3.0
+        },
+        {
+            "x" : 6.0,
+            "y" : 4.0
+        }
+    ]
+}

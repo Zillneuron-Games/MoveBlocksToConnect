@@ -1,0 +1,56 @@
+
+{
+    "ID" : 18,
+    "RoomID" : 2,
+    "PuzzleID" : 3,
+    "MinimumStepsCount" : 9,
+    "RoomName"          : "RA",
+    "InscriptionStonePositionRed" : {
+        "x" : 4.0,
+        "y" : 4.0
+    },
+    "InscriptionStonePositionBlue" : {
+        "x" : 6.0,
+        "y" : 4.0
+    },
+    "InscriptionStonePositionYellow" : {
+        "x" : 0.0,
+        "y" : 0.0
+    },
+    "InscriptionStoneTargetPositionRed" : {
+        "x" : 6.0,
+        "y" : 0.0
+    },
+    "InscriptionStoneTargetPositionBlue" : {
+        "x" : 0.0,
+        "y" : 0.0
+    },
+    "InscriptionStoneTargetPositionYellow" : {
+        "x" : 0.0,
+        "y" : 0.0
+    },
+    "MobilStonesPositions"                 : [
+    ],
+    "StaticStonesPositions"                : [
+        {
+            "x" : 1.0,
+            "y" : 1.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 3.0
+        },
+        {
+            "x" : 4.0,
+            "y" : 3.0
+        },
+        {
+            "x" : 5.0,
+            "y" : 3.0
+        },
+        {
+            "x" : 6.0,
+            "y" : 3.0
+        }
+    ]
+}

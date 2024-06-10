@@ -1,0 +1,56 @@
+
+{
+    "ID" : 43,
+    "RoomID" : 3,
+    "PuzzleID" : 13,
+    "MinimumStepsCount" : 7,
+    "RoomName"          : "SOBEK",
+    "InscriptionStonePositionRed" : {
+        "x" : 2.0,
+        "y" : 2.0
+    },
+    "InscriptionStonePositionBlue" : {
+        "x" : 4.0,
+        "y" : 2.0
+    },
+    "InscriptionStonePositionYellow" : {
+        "x" : 6.0,
+        "y" : 2.0
+    },
+    "InscriptionStoneTargetPositionRed" : {
+        "x" : 0.0,
+        "y" : 2.0
+    },
+    "InscriptionStoneTargetPositionBlue" : {
+        "x" : 1.0,
+        "y" : 0.0
+    },
+    "InscriptionStoneTargetPositionYellow" : {
+        "x" : 6.0,
+        "y" : 4.0
+    },
+    "MobilStonesPositions"                 : [
+    ],
+    "StaticStonesPositions"                : [
+        {
+            "x" : 3.0,
+            "y" : 1.0
+        },
+        {
+            "x" : 5.0,
+            "y" : 4.0
+        },
+        {
+            "x" : 5.0,
+            "y" : 3.0
+        },
+        {
+            "x" : 5.0,
+            "y" : 2.0
+        },
+        {
+            "x" : 6.0,
+            "y" : 1.0
+        }
+    ]
+}
