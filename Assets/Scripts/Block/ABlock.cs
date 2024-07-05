@@ -20,6 +20,11 @@ public abstract class ABlock
         get { return id; }
     }
 
+    public bool IsMovable
+    {
+        get { return isMovable; }
+    }
+
     public bool IsInTransit
     {
         get { return isInTransit; }

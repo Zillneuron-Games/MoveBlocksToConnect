@@ -1,11 +1,17 @@
 using System;
 using UnityEngine;
 
-public class InscriptionBlock : ABlock
+public class BuildingBlock : ABlock
 {
-    public InscriptionBlock(int id, GameObject blockObject, GridElement gridElement) : base(id, blockObject, gridElement)
+    private int groupId;
+
+    public int GroupId => groupId;
+
+    public BuildingBlock(int id, int groupId, GameObject blockObject, GridElement gridElement) : base(id, blockObject, gridElement)
     {
-        isMovable = true;
+        this.groupId = groupId;
+        this.isMovable = true;
+
         gridElement.SetFull();
 
         SetActive(true);
@@ -34,5 +40,15 @@ public class InscriptionBlock : ABlock
     private void SetActive(bool value)
     {
         Debug.LogError($"Inscription Block -> SetActive : {value}");
+    }
+
+    public void SetGroupId(int id)
+    {
+        groupId = id;
+    }
+
+    public void ResetGroupId()
+    {
+        groupId = 0;
     }
 }

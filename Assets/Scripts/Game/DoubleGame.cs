@@ -4,11 +4,14 @@ using System.Collections.Generic;
 
 public class DoubleGame : AGame
 {
-    public DoubleGame(GameBoardGrid gameBoardGrid, int id, int stepsBest, int coinsBest, int stepsMinimum, int playedNumber, InscriptionBlock inscriptionBlockRed, InscriptionBlock inscriptionBlockBlue,
-                        TargetBlock targetBlockRed, TargetBlock targetBlockBlue, List<MobileBlock> mobileBlock, List<StaticBlock> staticBlocks, Stack<GameplayStep> allMoves)
-                         : base(gameBoardGrid, id, stepsBest, coinsBest, stepsMinimum, playedNumber, inscriptionBlockRed, inscriptionBlockBlue, targetBlockRed, targetBlockBlue, mobileBlock, staticBlocks, allMoves)
-    {
+    protected BuildingBlock inscriptionBlockRed;
+    protected BuildingBlock inscriptionBlockBlue;
 
+    public DoubleGame(GameBoardGrid gameBoardGrid, int id, int stepsBest, int coinsBest, int stepsMinimum, int playedNumber, BuildingBlock inscriptionBlockRed, BuildingBlock inscriptionBlockBlue, List<MobileBlock> mobileBlock, List<StaticBlock> staticBlocks, Stack<GameplayStep> allMoves)
+                         : base(gameBoardGrid, id, stepsBest, coinsBest, stepsMinimum, playedNumber, mobileBlock, staticBlocks, allMoves)
+    {
+        this.inscriptionBlockRed = inscriptionBlockRed;
+        this.inscriptionBlockBlue = inscriptionBlockBlue;
     }
 
     protected override void MoveUP()
@@ -343,9 +346,6 @@ public class DoubleGame : AGame
         allBlocks.Add(inscriptionBlockRed);
         allBlocks.Add(inscriptionBlockBlue);
 
-        allBlocks.Add(targetBlockRed);
-        allBlocks.Add(targetBlockBlue);
-
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
             foreach (MobileBlock block in mobileBlocks)
@@ -374,9 +374,6 @@ public class DoubleGame : AGame
 
         allBlocks.Add(inscriptionBlockRed);
         allBlocks.Add(inscriptionBlockBlue);
-
-        allBlocks.Add(targetBlockRed);
-        allBlocks.Add(targetBlockBlue);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -437,7 +434,7 @@ public class DoubleGame : AGame
 
         ThrowTransitOverEvent();
 
-        if (inscriptionBlockRed.CurrentElement == targetBlockRed.CurrentElement && inscriptionBlockBlue.CurrentElement == targetBlockBlue.CurrentElement)
+        //if ("GameIsWin")
         {
             SoundManager.Instance.PlayStoneStop();
 

@@ -2,6 +2,7 @@ using System;
 
 public enum EGridElementState : byte
 {
-    Full = 0,
-    Empty = 1
+    Inaccessible = 0,
+    Full = 1,
+    Empty = 2
 }

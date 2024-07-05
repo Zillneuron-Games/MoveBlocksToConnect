@@ -5,7 +5,7 @@ public class MobileBlock : ABlock
 {
     public MobileBlock(int id, GameObject blockObject, GridElement gridElement) : base(id, blockObject, gridElement)
     {
-        isMovable = true;
+        this.isMovable = true;
         gridElement.SetFull();
     }
 

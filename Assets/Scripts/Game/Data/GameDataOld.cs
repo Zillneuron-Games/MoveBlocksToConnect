@@ -13,7 +13,7 @@ public class GameDataOld
 
     public string RoomName;
 
-    public Vector2 InscriptionStonePositionRed;
+    public Vector2[] InscriptionStonePositionRed;
     public Vector2 InscriptionStonePositionBlue;
     public Vector2 InscriptionStonePositionYellow;
 
@@ -33,7 +33,7 @@ public class GameDataOld
 
         RoomName = "NULL";
 
-        InscriptionStonePositionRed = new Vector2();
+        InscriptionStonePositionRed = new Vector2[0];
         InscriptionStonePositionBlue = new Vector2();
         InscriptionStonePositionYellow = new Vector2();
 
@@ -46,7 +46,7 @@ public class GameDataOld
     }
 
     public GameDataOld(int _id, int _room_id, int _puzzle_id, int _steps_minimum, string _room_name,
-                    Vector2 _inscription_point_red, Vector2 _inscription_point_blue, Vector2 _inscription_point_yellow,
+                    Vector2[] _inscription_point_red, Vector2 _inscription_point_blue, Vector2 _inscription_point_yellow,
                     Vector2 _target_point_red, Vector2 _target_point_blue, Vector2 _target_point_yellow,
                     List<Vector2> _mobil_stones_positions = null, List<Vector2> _static_stones_positions = null)
     {

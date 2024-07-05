@@ -24,12 +24,6 @@ public abstract class AGame
     protected int backStepsCounter;
     protected int backStepsMaximum;
 
-    protected InscriptionBlock inscriptionBlockRed;
-    protected InscriptionBlock inscriptionBlockBlue;
-
-    protected TargetBlock targetBlockRed;
-    protected TargetBlock targetBlockBlue;
-
     protected List<MobileBlock> mobileBlocks;
     protected List<StaticBlock> staticBlocks;
 
@@ -94,8 +88,7 @@ public abstract class AGame
 
     #region Constructors
 
-    public AGame(GameBoardGrid gameBoardGrid, int id, int stepsBest, int coinsBest, int stepsMinimum, int playedNumber, InscriptionBlock inscriptionBlockRed, InscriptionBlock inscriptionBlockBlue,
-                        TargetBlock targetBlockRed, TargetBlock targetBlockBlue, List<MobileBlock> mobileBlocks, List<StaticBlock> staticBlocks, Stack<GameplayStep> allMoves)
+    public AGame(GameBoardGrid gameBoardGrid, int id, int stepsBest, int coinsBest, int stepsMinimum, int playedNumber, List<MobileBlock> mobileBlocks, List<StaticBlock> staticBlocks, Stack<GameplayStep> allMoves)
     {
         this.gameBoardGrid = gameBoardGrid;
         this.id = id;
@@ -107,12 +100,6 @@ public abstract class AGame
 
         this.backStepsCounter = 0;
         this.backStepsMaximum = GameStartData.MaximumStepsCount;
-
-        this.inscriptionBlockRed = inscriptionBlockRed;
-        this.inscriptionBlockBlue = inscriptionBlockBlue;
-
-        this.targetBlockRed = targetBlockRed;
-        this.targetBlockBlue = targetBlockBlue;
 
         this.mobileBlocks = mobileBlocks;
         this.staticBlocks = staticBlocks;

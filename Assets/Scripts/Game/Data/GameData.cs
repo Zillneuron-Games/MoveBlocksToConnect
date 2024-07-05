@@ -8,7 +8,7 @@ public class GameData
     public int Id;
     public int MinimumStepsCount;
 
-    public Vector2 InscriptionBlockPositionRed;
+    public Vector2[] InscriptionBlockPositionRed;
     public Vector2 InscriptionBlockPositionBlue;
     public Vector2 InscriptionBlockPositionYellow;
 
@@ -24,7 +24,7 @@ public class GameData
         Id = 0;
         MinimumStepsCount = 0;
 
-        InscriptionBlockPositionRed = new Vector2();
+        InscriptionBlockPositionRed = new Vector2[0];
         InscriptionBlockPositionBlue = new Vector2();
         InscriptionBlockPositionYellow = new Vector2();
 
@@ -37,7 +37,7 @@ public class GameData
     }
 
     public GameData(int id, int stepsMinimum,
-                    Vector2 inscriptionBlockRed, Vector2 inscriptionBlockBlue, Vector2 inscriptionBlockYellow,
+                    Vector2[] inscriptionBlockRed, Vector2 inscriptionBlockBlue, Vector2 inscriptionBlockYellow,
                     Vector2 targetBlockRed, Vector2 targetBlockBlue, Vector2 targetBlockYellow,
                     List<Vector2> mobileBlocksPositions = null, List<Vector2> staticBlocksositions = null)
     {
@@ -54,6 +54,11 @@ public class GameData
 
         MobileBlocksPositions = mobileBlocksPositions;
         StaticBlocksPositions = staticBlocksositions;
+    }
+
+    public bool IsSingleGame
+    {
+        get { return (InscriptionBlockPositionBlue == InscriptionBlockTargetPositionBlue && InscriptionBlockPositionYellow == InscriptionBlockTargetPositionYellow); }
     }
 
     public bool IsDoubleGame

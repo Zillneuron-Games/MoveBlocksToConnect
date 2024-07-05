@@ -6,8 +6,8 @@ public class StaticBlock : ABlock
 {
     public StaticBlock(int id, GameObject blockObject, GridElement gridElement) : base(id, blockObject, gridElement)
     {
-        isMovable = false;
-        gridElement.SetFull();
+        this.isMovable = false;
+        gridElement.SetInaccessible();
     }
 
     public override void ChangePoint(GridElement newElement)

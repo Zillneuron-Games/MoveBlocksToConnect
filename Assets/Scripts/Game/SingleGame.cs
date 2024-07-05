@@ -1,31 +1,27 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
-public class TripleGame : AGame
+public class SingleGame : AGame
 {
-    protected BuildingBlock inscriptionBlockRed;
-    protected BuildingBlock inscriptionBlockBlue;
-    protected BuildingBlock inscriptionBlockYellow;
+    protected List<BuildingBlock> redBuildingBlocks;
 
-    public TripleGame(GameBoardGrid gameBoardGrid, int id, int stepsBest, int coinsBest, int stepsMinimum, int playedNumber, BuildingBlock inscriptionBlockRed, BuildingBlock inscriptionBlockBlue, BuildingBlock inscriptionBlockYellow, List<MobileBlock> mobileBlock, List<StaticBlock> staticBlocks, Stack<GameplayStep> allMoves)
-                        : base(gameBoardGrid, id, stepsBest, coinsBest, stepsMinimum, playedNumber, mobileBlock, staticBlocks, allMoves)
+    public SingleGame(GameBoardGrid gameBoardGrid, int id, int stepsBest, int coinsBest, int stepsMinimum, int playedNumber, List<BuildingBlock> redBuildingBlocks, List<MobileBlock> mobileBlock, List<StaticBlock> staticBlocks, Stack<GameplayStep> allMoves)
+                         : base(gameBoardGrid, id, stepsBest, coinsBest, stepsMinimum, playedNumber, mobileBlock, staticBlocks, allMoves)
     {
-        this.inscriptionBlockRed = inscriptionBlockRed;
-        this.inscriptionBlockBlue = inscriptionBlockBlue;
-        this.inscriptionBlockYellow = inscriptionBlockYellow;
+        this.redBuildingBlocks = redBuildingBlocks;
     }
-
 
     protected override void MoveUP()
     {
         bool isNewStepDone = false;
 
+        List<int> unmovableBlockGroups = CheckGroupedBlocksMovement(redBuildingBlocks, EGridElementNeighborSide.Top);
+
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.Add(inscriptionBlockRed);
-        allMovableBlocks.Add(inscriptionBlockBlue);
-        allMovableBlocks.Add(inscriptionBlockYellow);
+        allMovableBlocks.AddRange(redBuildingBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -39,7 +35,7 @@ public class TripleGame : AGame
         {
             foreach (ABlock block in allMovableBlocks)
             {
-                if (!block.IsInTransit)
+                if (IsBlockMovable(unmovableBlockGroups, block) && !block.IsInTransit)
                 {
                     if (block.CurrentElement.GetReferencePoint(EGridElementNeighborSide.Top) != null && block.CurrentElement.GetReferencePoint(EGridElementNeighborSide.Top).State == EGridElementState.Empty)
                     {
@@ -56,7 +52,6 @@ public class TripleGame : AGame
                 }
             }
         }
-
 
         if (isNewStepDone)
         {
@@ -84,6 +79,7 @@ public class TripleGame : AGame
 
             SoundManager.Instance.PlayStoneMove();
             ThrowFinalTransformEvent();
+            CalculateGroups();
         }
     }
 
@@ -91,11 +87,11 @@ public class TripleGame : AGame
     {
         bool isNewStepDone = false;
 
+        List<int> unmovableBlockGroups = CheckGroupedBlocksMovement(redBuildingBlocks, EGridElementNeighborSide.Bottom);
+
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.Add(inscriptionBlockRed);
-        allMovableBlocks.Add(inscriptionBlockBlue);
-        allMovableBlocks.Add(inscriptionBlockYellow);
+        allMovableBlocks.AddRange(redBuildingBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -109,7 +105,7 @@ public class TripleGame : AGame
         {
             foreach (ABlock block in allMovableBlocks)
             {
-                if (!block.IsInTransit)
+                if (IsBlockMovable(unmovableBlockGroups, block) && !block.IsInTransit)
                 {
                     if (block.CurrentElement.GetReferencePoint(EGridElementNeighborSide.Bottom) != null && block.CurrentElement.GetReferencePoint(EGridElementNeighborSide.Bottom).State == EGridElementState.Empty)
                     {
@@ -127,7 +123,6 @@ public class TripleGame : AGame
             }
         }
 
-
         if (isNewStepDone)
         {
             isNewStepDone = false;
@@ -139,21 +134,22 @@ public class TripleGame : AGame
                 backStepsCounter++;
             }
 
-            SortedDictionary<int, Vector2> allBlockPositions = new SortedDictionary<int, Vector2>();
+            SortedDictionary<int, Vector2> allBlocksPositions = new SortedDictionary<int, Vector2>();
 
             foreach (ABlock block in allMovableBlocks)
             {
                 block.FinalTransform();
 
-                allBlockPositions.Add(block.Id, block.CurrentElement.Position);
+                allBlocksPositions.Add(block.Id, block.CurrentElement.Position);
             }
 
-            GameplayStep nextStep = new GameplayStep(allMoves.Count, EDirection.Down, allBlockPositions);
+            GameplayStep nextStep = new GameplayStep(allMoves.Count, EDirection.Down, allBlocksPositions);
 
             allMoves.Push(nextStep);
 
             SoundManager.Instance.PlayStoneMove();
             ThrowFinalTransformEvent();
+            CalculateGroups();
         }
     }
 
@@ -161,11 +157,11 @@ public class TripleGame : AGame
     {
         bool isNewStepDone = false;
 
+        List<int> unmovableBlockGroups = CheckGroupedBlocksMovement(redBuildingBlocks, EGridElementNeighborSide.Left);
+
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.Add(inscriptionBlockRed);
-        allMovableBlocks.Add(inscriptionBlockBlue);
-        allMovableBlocks.Add(inscriptionBlockYellow);
+        allMovableBlocks.AddRange(redBuildingBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -179,7 +175,7 @@ public class TripleGame : AGame
         {
             foreach (ABlock block in allMovableBlocks)
             {
-                if (!block.IsInTransit)
+                if (IsBlockMovable(unmovableBlockGroups, block) && !block.IsInTransit)
                 {
                     if (block.CurrentElement.GetReferencePoint(EGridElementNeighborSide.Left) != null && block.CurrentElement.GetReferencePoint(EGridElementNeighborSide.Left).State == EGridElementState.Empty)
                     {
@@ -224,6 +220,7 @@ public class TripleGame : AGame
 
             SoundManager.Instance.PlayStoneMove();
             ThrowFinalTransformEvent();
+            CalculateGroups();
         }
     }
 
@@ -231,11 +228,11 @@ public class TripleGame : AGame
     {
         bool isNewStepDone = false;
 
+        List<int> unmovableBlockGroups = CheckGroupedBlocksMovement(redBuildingBlocks, EGridElementNeighborSide.Right);
+
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.Add(inscriptionBlockRed);
-        allMovableBlocks.Add(inscriptionBlockBlue);
-        allMovableBlocks.Add(inscriptionBlockYellow);
+        allMovableBlocks.AddRange(redBuildingBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -249,7 +246,7 @@ public class TripleGame : AGame
         {
             foreach (ABlock block in allMovableBlocks)
             {
-                if (!block.IsInTransit)
+                if (IsBlockMovable(unmovableBlockGroups, block) && !block.IsInTransit)
                 {
                     if (block.CurrentElement.GetReferencePoint(EGridElementNeighborSide.Right) != null && block.CurrentElement.GetReferencePoint(EGridElementNeighborSide.Right).State == EGridElementState.Empty)
                     {
@@ -266,7 +263,6 @@ public class TripleGame : AGame
                 }
             }
         }
-
 
         if (isNewStepDone)
         {
@@ -294,6 +290,7 @@ public class TripleGame : AGame
 
             SoundManager.Instance.PlayStoneMove();
             ThrowFinalTransformEvent();
+            CalculateGroups();
         }
     }
 
@@ -316,9 +313,7 @@ public class TripleGame : AGame
 
             List<ABlock> allMovableBlocks = new List<ABlock>();
 
-            allMovableBlocks.Add(inscriptionBlockRed);
-            allMovableBlocks.Add(inscriptionBlockBlue);
-            allMovableBlocks.Add(inscriptionBlockYellow);
+            allMovableBlocks.AddRange(redBuildingBlocks);
 
             if (mobileBlocks != null && mobileBlocks.Count > 0)
             {
@@ -335,28 +330,26 @@ public class TripleGame : AGame
                 Vector2 blockPosition = prevStep.GetPositionById(block.Id);
 
                 block.ChangePoint(gameBoardGrid[(int)blockPosition.x, (int)blockPosition.y]);
+
                 block.CurrentElement.SetFull();
             }
         }
 
         SoundManager.Instance.PlayStoneMove();
         ThrowFinalTransformEvent();
+        CalculateGroups();
     }
 
     protected override void StartStoneMatchEffects()
     {
-        inscriptionBlockRed.StartStoneMatchEffects();
-        inscriptionBlockBlue.StartStoneMatchEffects();
-        inscriptionBlockYellow.StartStoneMatchEffects();
+        redBuildingBlocks.ForEach(m => m.StartStoneMatchEffects());
     }
 
     public override void PutBlockObjects()
     {
         List<ABlock> allBlocks = new List<ABlock>();
 
-        allBlocks.Add(inscriptionBlockRed);
-        allBlocks.Add(inscriptionBlockBlue);
-        allBlocks.Add(inscriptionBlockYellow);
+        allBlocks.AddRange(redBuildingBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -384,9 +377,7 @@ public class TripleGame : AGame
     {
         List<ABlock> allBlocks = new List<ABlock>();
 
-        allBlocks.Add(inscriptionBlockRed);
-        allBlocks.Add(inscriptionBlockBlue);
-        allBlocks.Add(inscriptionBlockYellow);
+        allBlocks.AddRange(redBuildingBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -414,9 +405,7 @@ public class TripleGame : AGame
     {
         List<ABlock> allBlocks = new List<ABlock>();
 
-        allBlocks.Add(inscriptionBlockRed);
-        allBlocks.Add(inscriptionBlockBlue);
-        allBlocks.Add(inscriptionBlockYellow);
+        allBlocks.AddRange(redBuildingBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -438,7 +427,6 @@ public class TripleGame : AGame
             }
         }
 
-
         foreach (ABlock block in allBlocks)
         {
             if (block.BlockPosition != new Vector3(block.CurrentElement.X, block.CurrentElement.Y, 0.0f))
@@ -449,11 +437,13 @@ public class TripleGame : AGame
 
         ThrowTransitOverEvent();
 
-        //if ("GameIsWin")
+        if (IsMatchEnded())
         {
             SoundManager.Instance.PlayStoneStop();
+
             StartStoneMatchEffects();
             ThrowStonesMatchEvent();
+
             return;
         }
 
@@ -461,5 +451,116 @@ public class TripleGame : AGame
         {
             ThrowErrorEvent(EErrorType.StepsCount);
         }
+    }
+
+
+
+    private bool IsBlockMovable(List<int> unmovableBlockGroups, ABlock block)
+    {
+        BuildingBlock buildingBlock = block as BuildingBlock;
+        if (buildingBlock != null && unmovableBlockGroups.Contains(buildingBlock.GroupId))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private List<int> CheckGroupedBlocksMovement(List<BuildingBlock> redBuildingBlocks, EGridElementNeighborSide elementNeighborSide)
+    {
+        List<int> unmovableBlockGroups = new List<int>();
+
+        foreach (var block in redBuildingBlocks)
+        {
+            if(block.GroupId > 0 && !unmovableBlockGroups.Contains(block.GroupId))
+            {
+                if(!BlockIsMovable(block.CurrentElement, elementNeighborSide))
+                {
+                    unmovableBlockGroups.Add(block.GroupId);
+                }
+            }
+        }
+        return unmovableBlockGroups;
+    }
+
+    private bool BlockIsMovable(GridElement blockGridElement, EGridElementNeighborSide elementNeighborSide)
+    {
+        GridElement currentElementReferencePoint = blockGridElement.GetReferencePoint(elementNeighborSide);
+        
+        if (currentElementReferencePoint == null)
+        {
+            return false;
+        }
+        else if (currentElementReferencePoint.State == EGridElementState.Inaccessible)
+        {
+            return false;
+        }
+        else if(currentElementReferencePoint.State == EGridElementState.Full)
+        {
+            return BlockIsMovable(currentElementReferencePoint, elementNeighborSide);
+        }
+
+        return true;
+    }
+
+
+    private void CalculateGroups()
+    {
+        Dictionary<GridElement, BuildingBlock> blocksGridElements = new Dictionary<GridElement, BuildingBlock>();
+
+        foreach (var block in redBuildingBlocks)
+        {
+            block.ResetGroupId();
+            blocksGridElements[block.CurrentElement] = block;
+        }
+
+        for (int i = 0; i < redBuildingBlocks.Count; i++)
+        {
+            CalculateBlockGroup(i + 1, redBuildingBlocks[i].CurrentElement, blocksGridElements);
+        }
+
+        Dictionary<int, List<BuildingBlock>> redBuildingBlocksGroups = redBuildingBlocks.GroupBy(m => m.GroupId).ToDictionary(m => m.Key, m => m.ToList());
+
+        foreach (var groups in redBuildingBlocksGroups)
+        {
+            if(groups.Value.Count == 1)
+            {
+                foreach (var block in groups.Value)
+                {
+                    block.ResetGroupId();
+                }
+            }
+        }
+    }
+
+    private void CalculateBlockGroup(int index, GridElement gridElement, Dictionary<GridElement, BuildingBlock> blocksGridElements)
+    {
+        if (blocksGridElements.TryGetValue(gridElement, out BuildingBlock currentBlock))
+        {
+            if (currentBlock.GroupId == 0)
+            {
+                currentBlock.SetGroupId(index);
+
+                CalculateReferencePointBlockGroup(index, gridElement, blocksGridElements, EGridElementNeighborSide.Top);
+                CalculateReferencePointBlockGroup(index, gridElement, blocksGridElements, EGridElementNeighborSide.Bottom);
+                CalculateReferencePointBlockGroup(index, gridElement, blocksGridElements, EGridElementNeighborSide.Left);
+                CalculateReferencePointBlockGroup(index, gridElement, blocksGridElements, EGridElementNeighborSide.Right);
+            }
+        }
+    }
+
+    private void CalculateReferencePointBlockGroup(int index, GridElement gridElement, Dictionary<GridElement, BuildingBlock> blocksGridElements, EGridElementNeighborSide referencePointSide)
+    {
+        GridElement blockGridElement = gridElement.GetReferencePoint(referencePointSide);
+
+        if (blockGridElement != null && blocksGridElements.TryGetValue(blockGridElement, out BuildingBlock block))
+        {
+            CalculateBlockGroup(index, block.CurrentElement, blocksGridElements);
+        }
+    }
+
+    private bool IsMatchEnded()
+    {
+        int firstGroupId = redBuildingBlocks[0].GroupId;
+        return redBuildingBlocks.All(m => m.GroupId > 0 && m.GroupId == firstGroupId);
     }
 }

@@ -69,6 +69,11 @@ public class GridElement
         neighborElements.Add(neighborElementSide, element);
     }
 
+    public void SetInaccessible()
+    {
+        state = EGridElementState.Inaccessible;
+    }
+
     public void SetFull()
     {
         state = EGridElementState.Full;
