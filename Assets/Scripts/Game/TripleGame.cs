@@ -1,21 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class TripleGame : AGame
 {
-    protected BuildingBlock inscriptionBlockRed;
-    protected BuildingBlock inscriptionBlockBlue;
-    protected BuildingBlock inscriptionBlockYellow;
+    protected List<TileBlock> redTileBlocks;
+    protected List<TileBlock> blueTileBlocks;
+    protected List<TileBlock> greenTileBlocks;
 
-    public TripleGame(GameBoardGrid gameBoardGrid, int id, int stepsBest, int coinsBest, int stepsMinimum, int playedNumber, BuildingBlock inscriptionBlockRed, BuildingBlock inscriptionBlockBlue, BuildingBlock inscriptionBlockYellow, List<MobileBlock> mobileBlock, List<StaticBlock> staticBlocks, Stack<GameplayStep> allMoves)
+    public TripleGame(GameBoardGrid gameBoardGrid, int id, int stepsBest, int coinsBest, int stepsMinimum, int playedNumber, List<TileBlock> redTileBlocks, List<TileBlock> blueTileBlocks, List<TileBlock> greenTileBlocks, List<MobileBlock> mobileBlock, List<StaticBlock> staticBlocks, Stack<GameplayStep> allMoves)
                         : base(gameBoardGrid, id, stepsBest, coinsBest, stepsMinimum, playedNumber, mobileBlock, staticBlocks, allMoves)
     {
-        this.inscriptionBlockRed = inscriptionBlockRed;
-        this.inscriptionBlockBlue = inscriptionBlockBlue;
-        this.inscriptionBlockYellow = inscriptionBlockYellow;
+        this.redTileBlocks = redTileBlocks;
+        this.blueTileBlocks = blueTileBlocks;
+        this.greenTileBlocks = greenTileBlocks;
     }
-
 
     protected override void MoveUP()
     {
@@ -23,9 +23,9 @@ public class TripleGame : AGame
 
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.Add(inscriptionBlockRed);
-        allMovableBlocks.Add(inscriptionBlockBlue);
-        allMovableBlocks.Add(inscriptionBlockYellow);
+        allMovableBlocks.AddRange(redTileBlocks);
+        allMovableBlocks.AddRange(blueTileBlocks);
+        allMovableBlocks.AddRange(greenTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -93,9 +93,9 @@ public class TripleGame : AGame
 
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.Add(inscriptionBlockRed);
-        allMovableBlocks.Add(inscriptionBlockBlue);
-        allMovableBlocks.Add(inscriptionBlockYellow);
+        allMovableBlocks.AddRange(redTileBlocks);
+        allMovableBlocks.AddRange(blueTileBlocks);
+        allMovableBlocks.AddRange(greenTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -163,9 +163,9 @@ public class TripleGame : AGame
 
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.Add(inscriptionBlockRed);
-        allMovableBlocks.Add(inscriptionBlockBlue);
-        allMovableBlocks.Add(inscriptionBlockYellow);
+        allMovableBlocks.AddRange(redTileBlocks);
+        allMovableBlocks.AddRange(blueTileBlocks);
+        allMovableBlocks.AddRange(greenTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -233,9 +233,9 @@ public class TripleGame : AGame
 
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.Add(inscriptionBlockRed);
-        allMovableBlocks.Add(inscriptionBlockBlue);
-        allMovableBlocks.Add(inscriptionBlockYellow);
+        allMovableBlocks.AddRange(redTileBlocks);
+        allMovableBlocks.AddRange(blueTileBlocks);
+        allMovableBlocks.AddRange(greenTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -316,9 +316,9 @@ public class TripleGame : AGame
 
             List<ABlock> allMovableBlocks = new List<ABlock>();
 
-            allMovableBlocks.Add(inscriptionBlockRed);
-            allMovableBlocks.Add(inscriptionBlockBlue);
-            allMovableBlocks.Add(inscriptionBlockYellow);
+            allMovableBlocks.AddRange(redTileBlocks);
+            allMovableBlocks.AddRange(blueTileBlocks);
+            allMovableBlocks.AddRange(greenTileBlocks);
 
             if (mobileBlocks != null && mobileBlocks.Count > 0)
             {
@@ -345,18 +345,18 @@ public class TripleGame : AGame
 
     protected override void StartStoneMatchEffects()
     {
-        inscriptionBlockRed.StartStoneMatchEffects();
-        inscriptionBlockBlue.StartStoneMatchEffects();
-        inscriptionBlockYellow.StartStoneMatchEffects();
+        redTileBlocks.ForEach(m => m.StartStoneMatchEffects());
+        blueTileBlocks.ForEach(m => m.StartStoneMatchEffects());
+        greenTileBlocks.ForEach(m => m.StartStoneMatchEffects());
     }
 
     public override void PutBlockObjects()
     {
         List<ABlock> allBlocks = new List<ABlock>();
 
-        allBlocks.Add(inscriptionBlockRed);
-        allBlocks.Add(inscriptionBlockBlue);
-        allBlocks.Add(inscriptionBlockYellow);
+        allBlocks.AddRange(redTileBlocks);
+        allBlocks.AddRange(blueTileBlocks);
+        allBlocks.AddRange(greenTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -384,9 +384,9 @@ public class TripleGame : AGame
     {
         List<ABlock> allBlocks = new List<ABlock>();
 
-        allBlocks.Add(inscriptionBlockRed);
-        allBlocks.Add(inscriptionBlockBlue);
-        allBlocks.Add(inscriptionBlockYellow);
+        allBlocks.AddRange(redTileBlocks);
+        allBlocks.AddRange(blueTileBlocks);
+        allBlocks.AddRange(greenTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -414,9 +414,9 @@ public class TripleGame : AGame
     {
         List<ABlock> allBlocks = new List<ABlock>();
 
-        allBlocks.Add(inscriptionBlockRed);
-        allBlocks.Add(inscriptionBlockBlue);
-        allBlocks.Add(inscriptionBlockYellow);
+        allBlocks.AddRange(redTileBlocks);
+        allBlocks.AddRange(blueTileBlocks);
+        allBlocks.AddRange(greenTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -449,7 +449,7 @@ public class TripleGame : AGame
 
         ThrowTransitOverEvent();
 
-        //if ("GameIsWin")
+        if (IsMatchEnded())
         {
             SoundManager.Instance.PlayStoneStop();
             StartStoneMatchEffects();
@@ -461,5 +461,13 @@ public class TripleGame : AGame
         {
             ThrowErrorEvent(EErrorType.StepsCount);
         }
+    }
+
+    private bool IsMatchEnded()
+    {
+        int firstGroupId = redTileBlocks[0].GroupId;
+        int secondGroupId = blueTileBlocks[0].GroupId;
+        int thirdGroupId = greenTileBlocks[0].GroupId;
+        return redTileBlocks.All(m => m.GroupId > 0 && m.GroupId == firstGroupId) && blueTileBlocks.All(m => m.GroupId > 0 && m.GroupId == secondGroupId) && greenTileBlocks.All(m => m.GroupId > 0 && m.GroupId == thirdGroupId);
     }
 }

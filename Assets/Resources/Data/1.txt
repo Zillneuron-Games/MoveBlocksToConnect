@@ -1,47 +1,103 @@
 
 {
-    "ID" : 1,
-    "RoomID" : 1,
-    "PuzzleID" : 1,
-    "MinimumStepsCount" : 8,
-    "RoomName"          : "SETH",
-    "InscriptionStonePositionRed" : 
-    [
+    "Id" : 1,
+    "StepsMinimumCount" : 8,
+    "RedTileBlocksPositions" : [
         {
-            "x" : 5.0,
-            "y" : 1.0
+            "x" : 6.0,
+            "y" : 5.0
         },
         {
+            "x" : 4.0,
+            "y" : 7.0
+        },
+        {
+            "x" : 6.0,
+            "y" : 9.0
+        },
+        {
+            "x" : 8.0,
+            "y" : 7.0
+        },
+         {
+            "x" : 12.0,
+            "y" : 7.0
+        }
+    ],
+    "BlueTileBlocksPositions" : [
+    ],
+    "GreenTileBlocksPositions" : [
+    ],
+    "MobileBlocksPositions" : [
+    ],
+    "StaticStonesPositions" : [
+        {
+            "x" : 2.0,
+            "y" : 4.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 5.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 6.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 7.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 8.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 9.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 10.0
+        },
+        {
+            "x" : 8.0,
+            "y" : 11.0
+        },
+        {
+            "x" : 9.0,
+            "y" : 11.0
+        },
+        {
+            "x" : 10.0,
+            "y" : 11.0
+        },
+        {
+            "x" : 11.0,
+            "y" : 11.0
+        },
+        {
+            "x" : 12.0,
+            "y" : 11.0
+        },
+         {
             "x" : 8.0,
             "y" : 3.0
         },
         {
+            "x" : 9.0,
+            "y" : 3.0
+        },
+        {
+            "x" : 10.0,
+            "y" : 3.0
+        },
+        {
             "x" : 11.0,
-            "y" : 7.0
+            "y" : 3.0
+        },
+        {
+            "x" : 12.0,
+            "y" : 3.0
         }
-    ],
-    "InscriptionStonePositionBlue" : {
-        "x" : 0.0,
-        "y" : 0.0
-    },
-    "InscriptionStonePositionYellow" : {
-        "x" : 0.0,
-        "y" : 0.0
-    },
-    "InscriptionStoneTargetPositionRed" : {
-        "x" : 1.0,
-        "y" : 3.0
-    },
-    "InscriptionStoneTargetPositionBlue" : {
-        "x" : 0.0,
-        "y" : 0.0
-    },
-    "InscriptionStoneTargetPositionYellow" : {
-        "x" : 0.0,
-        "y" : 0.0
-    },
-    "MobilStonesPositions"                 : [
-    ],
-    "StaticStonesPositions"                : [
     ]
 }

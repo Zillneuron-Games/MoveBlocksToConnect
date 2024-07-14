@@ -5,23 +5,23 @@ using System.Linq;
 
 public class SingleGame : AGame
 {
-    protected List<BuildingBlock> redBuildingBlocks;
+    protected List<TileBlock> redTileBlocks;
 
-    public SingleGame(GameBoardGrid gameBoardGrid, int id, int stepsBest, int coinsBest, int stepsMinimum, int playedNumber, List<BuildingBlock> redBuildingBlocks, List<MobileBlock> mobileBlock, List<StaticBlock> staticBlocks, Stack<GameplayStep> allMoves)
+    public SingleGame(GameBoardGrid gameBoardGrid, int id, int stepsBest, int coinsBest, int stepsMinimum, int playedNumber, List<TileBlock> redTileBlocks, List<MobileBlock> mobileBlock, List<StaticBlock> staticBlocks, Stack<GameplayStep> allMoves)
                          : base(gameBoardGrid, id, stepsBest, coinsBest, stepsMinimum, playedNumber, mobileBlock, staticBlocks, allMoves)
     {
-        this.redBuildingBlocks = redBuildingBlocks;
+        this.redTileBlocks = redTileBlocks;
     }
 
     protected override void MoveUP()
     {
         bool isNewStepDone = false;
 
-        List<int> unmovableBlockGroups = CheckGroupedBlocksMovement(redBuildingBlocks, EGridElementNeighborSide.Top);
+        List<int> unmovableBlockGroups = CheckGroupedBlocksMovement(redTileBlocks, EGridElementNeighborSide.Top);
 
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.AddRange(redBuildingBlocks);
+        allMovableBlocks.AddRange(redTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -87,11 +87,11 @@ public class SingleGame : AGame
     {
         bool isNewStepDone = false;
 
-        List<int> unmovableBlockGroups = CheckGroupedBlocksMovement(redBuildingBlocks, EGridElementNeighborSide.Bottom);
+        List<int> unmovableBlockGroups = CheckGroupedBlocksMovement(redTileBlocks, EGridElementNeighborSide.Bottom);
 
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.AddRange(redBuildingBlocks);
+        allMovableBlocks.AddRange(redTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -157,11 +157,11 @@ public class SingleGame : AGame
     {
         bool isNewStepDone = false;
 
-        List<int> unmovableBlockGroups = CheckGroupedBlocksMovement(redBuildingBlocks, EGridElementNeighborSide.Left);
+        List<int> unmovableBlockGroups = CheckGroupedBlocksMovement(redTileBlocks, EGridElementNeighborSide.Left);
 
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.AddRange(redBuildingBlocks);
+        allMovableBlocks.AddRange(redTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -228,11 +228,11 @@ public class SingleGame : AGame
     {
         bool isNewStepDone = false;
 
-        List<int> unmovableBlockGroups = CheckGroupedBlocksMovement(redBuildingBlocks, EGridElementNeighborSide.Right);
+        List<int> unmovableBlockGroups = CheckGroupedBlocksMovement(redTileBlocks, EGridElementNeighborSide.Right);
 
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.AddRange(redBuildingBlocks);
+        allMovableBlocks.AddRange(redTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -313,7 +313,7 @@ public class SingleGame : AGame
 
             List<ABlock> allMovableBlocks = new List<ABlock>();
 
-            allMovableBlocks.AddRange(redBuildingBlocks);
+            allMovableBlocks.AddRange(redTileBlocks);
 
             if (mobileBlocks != null && mobileBlocks.Count > 0)
             {
@@ -342,14 +342,14 @@ public class SingleGame : AGame
 
     protected override void StartStoneMatchEffects()
     {
-        redBuildingBlocks.ForEach(m => m.StartStoneMatchEffects());
+        redTileBlocks.ForEach(m => m.StartStoneMatchEffects());
     }
 
     public override void PutBlockObjects()
     {
         List<ABlock> allBlocks = new List<ABlock>();
 
-        allBlocks.AddRange(redBuildingBlocks);
+        allBlocks.AddRange(redTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -377,7 +377,7 @@ public class SingleGame : AGame
     {
         List<ABlock> allBlocks = new List<ABlock>();
 
-        allBlocks.AddRange(redBuildingBlocks);
+        allBlocks.AddRange(redTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -405,7 +405,7 @@ public class SingleGame : AGame
     {
         List<ABlock> allBlocks = new List<ABlock>();
 
-        allBlocks.AddRange(redBuildingBlocks);
+        allBlocks.AddRange(redTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -457,7 +457,7 @@ public class SingleGame : AGame
 
     private bool IsBlockMovable(List<int> unmovableBlockGroups, ABlock block)
     {
-        BuildingBlock buildingBlock = block as BuildingBlock;
+        TileBlock buildingBlock = block as TileBlock;
         if (buildingBlock != null && unmovableBlockGroups.Contains(buildingBlock.GroupId))
         {
             return false;
@@ -465,7 +465,7 @@ public class SingleGame : AGame
         return true;
     }
 
-    private List<int> CheckGroupedBlocksMovement(List<BuildingBlock> redBuildingBlocks, EGridElementNeighborSide elementNeighborSide)
+    private List<int> CheckGroupedBlocksMovement(List<TileBlock> redBuildingBlocks, EGridElementNeighborSide elementNeighborSide)
     {
         List<int> unmovableBlockGroups = new List<int>();
 
@@ -505,20 +505,20 @@ public class SingleGame : AGame
 
     private void CalculateGroups()
     {
-        Dictionary<GridElement, BuildingBlock> blocksGridElements = new Dictionary<GridElement, BuildingBlock>();
+        Dictionary<GridElement, TileBlock> blocksGridElements = new Dictionary<GridElement, TileBlock>();
 
-        foreach (var block in redBuildingBlocks)
+        foreach (var block in redTileBlocks)
         {
             block.ResetGroupId();
             blocksGridElements[block.CurrentElement] = block;
         }
 
-        for (int i = 0; i < redBuildingBlocks.Count; i++)
+        for (int i = 0; i < redTileBlocks.Count; i++)
         {
-            CalculateBlockGroup(i + 1, redBuildingBlocks[i].CurrentElement, blocksGridElements);
+            CalculateBlockGroup(i + 1, redTileBlocks[i].CurrentElement, blocksGridElements);
         }
 
-        Dictionary<int, List<BuildingBlock>> redBuildingBlocksGroups = redBuildingBlocks.GroupBy(m => m.GroupId).ToDictionary(m => m.Key, m => m.ToList());
+        Dictionary<int, List<TileBlock>> redBuildingBlocksGroups = redTileBlocks.GroupBy(m => m.GroupId).ToDictionary(m => m.Key, m => m.ToList());
 
         foreach (var groups in redBuildingBlocksGroups)
         {
@@ -532,9 +532,9 @@ public class SingleGame : AGame
         }
     }
 
-    private void CalculateBlockGroup(int index, GridElement gridElement, Dictionary<GridElement, BuildingBlock> blocksGridElements)
+    private void CalculateBlockGroup(int index, GridElement gridElement, Dictionary<GridElement, TileBlock> blocksGridElements)
     {
-        if (blocksGridElements.TryGetValue(gridElement, out BuildingBlock currentBlock))
+        if (blocksGridElements.TryGetValue(gridElement, out TileBlock currentBlock))
         {
             if (currentBlock.GroupId == 0)
             {
@@ -548,11 +548,11 @@ public class SingleGame : AGame
         }
     }
 
-    private void CalculateReferencePointBlockGroup(int index, GridElement gridElement, Dictionary<GridElement, BuildingBlock> blocksGridElements, EGridElementNeighborSide referencePointSide)
+    private void CalculateReferencePointBlockGroup(int index, GridElement gridElement, Dictionary<GridElement, TileBlock> blocksGridElements, EGridElementNeighborSide referencePointSide)
     {
         GridElement blockGridElement = gridElement.GetReferencePoint(referencePointSide);
 
-        if (blockGridElement != null && blocksGridElements.TryGetValue(blockGridElement, out BuildingBlock block))
+        if (blockGridElement != null && blocksGridElements.TryGetValue(blockGridElement, out TileBlock block))
         {
             CalculateBlockGroup(index, block.CurrentElement, blocksGridElements);
         }
@@ -560,7 +560,7 @@ public class SingleGame : AGame
 
     private bool IsMatchEnded()
     {
-        int firstGroupId = redBuildingBlocks[0].GroupId;
-        return redBuildingBlocks.All(m => m.GroupId > 0 && m.GroupId == firstGroupId);
+        int firstGroupId = redTileBlocks[0].GroupId;
+        return redTileBlocks.All(m => m.GroupId > 0 && m.GroupId == firstGroupId);
     }
 }

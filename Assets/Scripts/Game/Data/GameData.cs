@@ -6,64 +6,45 @@ using UnityEngine;
 public class GameData
 {
     public int Id;
-    public int MinimumStepsCount;
-
-    public Vector2[] InscriptionBlockPositionRed;
-    public Vector2 InscriptionBlockPositionBlue;
-    public Vector2 InscriptionBlockPositionYellow;
-
-    public Vector2 InscriptionBlockTargetPositionRed;
-    public Vector2 InscriptionBlockTargetPositionBlue;
-    public Vector2 InscriptionBlockTargetPositionYellow;
-
+    public int StepsMinimumCount;
+    public List<Vector2> RedTileBlocksPositions;
+    public List<Vector2> BlueTileBlocksPositions;
+    public List<Vector2> GreenTileBlocksPositions;
     public List<Vector2> MobileBlocksPositions;
     public List<Vector2> StaticBlocksPositions;
 
     public GameData()
     {
         Id = 0;
-        MinimumStepsCount = 0;
+        StepsMinimumCount = 0;
 
-        InscriptionBlockPositionRed = new Vector2[0];
-        InscriptionBlockPositionBlue = new Vector2();
-        InscriptionBlockPositionYellow = new Vector2();
-
-        InscriptionBlockTargetPositionRed = new Vector2();
-        InscriptionBlockTargetPositionBlue = new Vector2();
-        InscriptionBlockTargetPositionYellow = new Vector2();
-
+        RedTileBlocksPositions = null;
+        BlueTileBlocksPositions = null;
+        GreenTileBlocksPositions = null;
         MobileBlocksPositions = null;
         StaticBlocksPositions = null;
     }
 
-    public GameData(int id, int stepsMinimum,
-                    Vector2[] inscriptionBlockRed, Vector2 inscriptionBlockBlue, Vector2 inscriptionBlockYellow,
-                    Vector2 targetBlockRed, Vector2 targetBlockBlue, Vector2 targetBlockYellow,
-                    List<Vector2> mobileBlocksPositions = null, List<Vector2> staticBlocksositions = null)
+    public GameData(int id, int stepsMinimum, List<Vector2> redTileBlocksPositions, List<Vector2> blueTileBlocksPositions = null, List<Vector2> greenTileBlocksPositions = null, List<Vector2> mobileBlocksPositions = null, List<Vector2> staticBlocksositions = null)
     {
         Id = id;
-        MinimumStepsCount = stepsMinimum;
+        StepsMinimumCount = stepsMinimum;
 
-        InscriptionBlockPositionRed = inscriptionBlockRed;
-        InscriptionBlockPositionBlue = inscriptionBlockBlue;
-        InscriptionBlockPositionYellow = inscriptionBlockYellow;
-
-        InscriptionBlockTargetPositionRed = targetBlockRed;
-        InscriptionBlockTargetPositionBlue = targetBlockBlue;
-        InscriptionBlockTargetPositionYellow = targetBlockYellow;
-
+        RedTileBlocksPositions = redTileBlocksPositions;
+        BlueTileBlocksPositions = blueTileBlocksPositions;
+        GreenTileBlocksPositions = greenTileBlocksPositions;
         MobileBlocksPositions = mobileBlocksPositions;
         StaticBlocksPositions = staticBlocksositions;
     }
 
     public bool IsSingleGame
     {
-        get { return (InscriptionBlockPositionBlue == InscriptionBlockTargetPositionBlue && InscriptionBlockPositionYellow == InscriptionBlockTargetPositionYellow); }
+        get { return BlueTileBlocksPositions.Count == 0 && GreenTileBlocksPositions.Count == 0; }
     }
 
     public bool IsDoubleGame
     {
-        get { return (InscriptionBlockPositionYellow == InscriptionBlockTargetPositionYellow); }
+        get { return GreenTileBlocksPositions.Count == 0; }
     }
 }
 

@@ -1,36 +1,51 @@
 
 {
-    "ID" : 2,
-    "RoomID" : 1,
-    "PuzzleID" : 2,
-    "MinimumStepsCount" : 10,
-    "RoomName"          : "SETH",
-    "InscriptionStonePositionRed" : {
-        "x" : 6.0,
-        "y" : 0.0
-    },
-    "InscriptionStonePositionBlue" : {
-        "x" : 0.0,
-        "y" : 0.0
-    },
-    "InscriptionStonePositionYellow" : {
-        "x" : 0.0,
-        "y" : 0.0
-    },
-    "InscriptionStoneTargetPositionRed" : {
-        "x" : 4.0,
-        "y" : 3.0
-    },
-    "InscriptionStoneTargetPositionBlue" : {
-        "x" : 3.0,
-        "y" : 3.0
-    },
-    "InscriptionStoneTargetPositionYellow" : {
-        "x" : 0.0,
-        "y" : 0.0
-    },
-    "MobilStonesPositions"                 : [
+    "Id" : 1,
+    "StepsMinimumCount" : 8,
+    "RedTileBlocksPositions" : [
+        {
+            "x" : 6.0,
+            "y" : 5.0
+        },
+        {
+            "x" : 4.0,
+            "y" : 7.0
+        },
+        {
+            "x" : 6.0,
+            "y" : 9.0
+        },
+        {
+            "x" : 8.0,
+            "y" : 7.0
+        },
+         {
+            "x" : 12.0,
+            "y" : 7.0
+        }
     ],
-    "StaticStonesPositions"                : [
-    ]
+    "BlueTileBlocksPositions" : [
+    ],
+    "GreenTileBlocksPositions" : [
+    ],
+    "MobileBlocksPositions" : [
+    ],
+    "StaticStonesPositions" : [
+        {
+            "x" : 2.0,
+            "y" : 4.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 5.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 6.0
+        },
+        {
+            "x" : 2.0,
+            "y" : 7.0
+        }
+     ]
 }

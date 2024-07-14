@@ -6,7 +6,7 @@ public class GameStartData
 {
     private const string SoundPrefsKey = "sound";
     public const string GameDataPrefsKey = "gamedata";
-    public const int GamesCount = 105;
+    public const int GamesCount = 16;
     public const int MaximumStepsCount = 998;
 
     private int totalCoins;

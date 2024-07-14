@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class DoubleGame : AGame
 {
-    protected BuildingBlock inscriptionBlockRed;
-    protected BuildingBlock inscriptionBlockBlue;
+    protected List<TileBlock> redTileBlocks;
+    protected List<TileBlock> blueTileBlocks;
 
-    public DoubleGame(GameBoardGrid gameBoardGrid, int id, int stepsBest, int coinsBest, int stepsMinimum, int playedNumber, BuildingBlock inscriptionBlockRed, BuildingBlock inscriptionBlockBlue, List<MobileBlock> mobileBlock, List<StaticBlock> staticBlocks, Stack<GameplayStep> allMoves)
+    public DoubleGame(GameBoardGrid gameBoardGrid, int id, int stepsBest, int coinsBest, int stepsMinimum, int playedNumber, List<TileBlock> redTileBlocks, List<TileBlock> blueTileBlocks, List<MobileBlock> mobileBlock, List<StaticBlock> staticBlocks, Stack<GameplayStep> allMoves)
                          : base(gameBoardGrid, id, stepsBest, coinsBest, stepsMinimum, playedNumber, mobileBlock, staticBlocks, allMoves)
     {
-        this.inscriptionBlockRed = inscriptionBlockRed;
-        this.inscriptionBlockBlue = inscriptionBlockBlue;
+        this.redTileBlocks = redTileBlocks;
+        this.blueTileBlocks = blueTileBlocks;
     }
 
     protected override void MoveUP()
@@ -20,8 +21,8 @@ public class DoubleGame : AGame
 
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.Add(inscriptionBlockRed);
-        allMovableBlocks.Add(inscriptionBlockBlue);
+        allMovableBlocks.AddRange(redTileBlocks);
+        allMovableBlocks.AddRange(blueTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -88,8 +89,8 @@ public class DoubleGame : AGame
 
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.Add(inscriptionBlockRed);
-        allMovableBlocks.Add(inscriptionBlockBlue);
+        allMovableBlocks.AddRange(redTileBlocks);
+        allMovableBlocks.AddRange(blueTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -156,8 +157,8 @@ public class DoubleGame : AGame
 
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.Add(inscriptionBlockRed);
-        allMovableBlocks.Add(inscriptionBlockBlue);
+        allMovableBlocks.AddRange(redTileBlocks);
+        allMovableBlocks.AddRange(blueTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -225,8 +226,8 @@ public class DoubleGame : AGame
 
         List<ABlock> allMovableBlocks = new List<ABlock>();
 
-        allMovableBlocks.Add(inscriptionBlockRed);
-        allMovableBlocks.Add(inscriptionBlockBlue);
+        allMovableBlocks.AddRange(redTileBlocks);
+        allMovableBlocks.AddRange(blueTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -306,8 +307,8 @@ public class DoubleGame : AGame
 
             List<ABlock> allMovableBlocks = new List<ABlock>();
 
-            allMovableBlocks.Add(inscriptionBlockRed);
-            allMovableBlocks.Add(inscriptionBlockBlue);
+            allMovableBlocks.AddRange(redTileBlocks);
+            allMovableBlocks.AddRange(blueTileBlocks);
 
             if (mobileBlocks != null && mobileBlocks.Count > 0)
             {
@@ -335,16 +336,16 @@ public class DoubleGame : AGame
 
     protected override void StartStoneMatchEffects()
     {
-        inscriptionBlockRed.StartStoneMatchEffects();
-        inscriptionBlockBlue.StartStoneMatchEffects();
+        redTileBlocks.ForEach(m => m.StartStoneMatchEffects());
+        blueTileBlocks.ForEach(m => m.StartStoneMatchEffects());
     }
 
     public override void PutBlockObjects()
     {
         List<ABlock> allBlocks = new List<ABlock>();
 
-        allBlocks.Add(inscriptionBlockRed);
-        allBlocks.Add(inscriptionBlockBlue);
+        allBlocks.AddRange(redTileBlocks);
+        allBlocks.AddRange(blueTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -372,8 +373,8 @@ public class DoubleGame : AGame
     {
         List<ABlock> allBlocks = new List<ABlock>();
 
-        allBlocks.Add(inscriptionBlockRed);
-        allBlocks.Add(inscriptionBlockBlue);
+        allBlocks.AddRange(redTileBlocks);
+        allBlocks.AddRange(blueTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -401,8 +402,8 @@ public class DoubleGame : AGame
     {
         List<ABlock> allBlocks = new List<ABlock>();
 
-        allBlocks.Add(inscriptionBlockRed);
-        allBlocks.Add(inscriptionBlockBlue);
+        allBlocks.AddRange(redTileBlocks);
+        allBlocks.AddRange(blueTileBlocks);
 
         if (mobileBlocks != null && mobileBlocks.Count > 0)
         {
@@ -434,7 +435,7 @@ public class DoubleGame : AGame
 
         ThrowTransitOverEvent();
 
-        //if ("GameIsWin")
+        if (IsMatchEnded())
         {
             SoundManager.Instance.PlayStoneStop();
 
@@ -448,10 +449,12 @@ public class DoubleGame : AGame
         {
             ThrowErrorEvent(EErrorType.StepsCount);
         }
+    }
 
-        if (id == 1 && inscriptionBlockRed.CurrentElement.X == inscriptionBlockBlue.CurrentElement.X)
-        {
-            ThrowErrorEvent(EErrorType.AvailableSteps);
-        }
+    private bool IsMatchEnded()
+    {
+        int firstGroupId = redTileBlocks[0].GroupId;
+        int secondGroupId = blueTileBlocks[0].GroupId;
+        return redTileBlocks.All(m => m.GroupId > 0 && m.GroupId == firstGroupId) && blueTileBlocks.All(m => m.GroupId > 0 && m.GroupId == secondGroupId);
     }
 }

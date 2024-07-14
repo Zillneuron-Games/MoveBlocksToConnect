@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-public class BuildingBlock : ABlock
+public class TileBlock : ABlock
 {
     private int groupId;
 
     public int GroupId => groupId;
 
-    public BuildingBlock(int id, int groupId, GameObject blockObject, GridElement gridElement) : base(id, blockObject, gridElement)
+    public TileBlock(int id, int groupId, GameObject blockObject, GridElement gridElement) : base(id, blockObject, gridElement)
     {
         this.groupId = groupId;
         this.isMovable = true;
