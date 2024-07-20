@@ -25,18 +25,11 @@ public class GameplayManager : MonoBehaviour, IGridElementObjectProvider
 
     #region Inspector
 
-    public GameObject inscriptionRed;
-    public GameObject inscriptionBlue;
-    public GameObject inscriptionYellow;
-    public GameObject inscriptionGreen;
-
-    public GameObject targetRed;
-    public GameObject targetBlue;
-    public GameObject targetYellow;
-    public GameObject targetGreen;
-
-    public GameObject[] mobileBlocks;
-    public GameObject[] staticBlocks;
+    public GameObject redTileBlock;
+    public GameObject greenTileBlock;
+    public GameObject blueTileBlock;
+    public GameObject mobileBlock;
+    public GameObject staticBlock;
 
     public GameObjectRow[] gridBlocks;
 
@@ -125,64 +118,9 @@ public class GameplayManager : MonoBehaviour, IGridElementObjectProvider
             SortedDictionary<int, Vector2> allBlocksPositions = new SortedDictionary<int, Vector2>();
 
             List<TileBlock> redTileBlocks = new List<TileBlock>();
-            
             foreach (var stonePosition in gameData.RedTileBlocksPositions)
             {
-                redTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(inscriptionRed), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
-                allBlocksPositions.Add(indexCounter, stonePosition);
-                indexCounter++;
-            }
-
-            List<MobileBlock> mobileBlocks = null;
-
-            if (gameData.MobileBlocksPositions != null && gameData.MobileBlocksPositions.Count > 0)
-            {
-                mobileBlocks = new List<MobileBlock>();
-
-                int mobileBlocksIndexCounter = 0;
-
-                foreach (Vector2 pos in gameData.MobileBlocksPositions)
-                {
-                    MobileBlock tempBlock = new MobileBlock(indexCounter, this.mobileBlocks[mobileBlocksIndexCounter], gameBoardGrid[(int)pos.x, (int)pos.y]);
-                    mobileBlocks.Add(tempBlock);
-                    allBlocksPositions.Add(indexCounter, pos);
-                    indexCounter++;
-                    mobileBlocksIndexCounter++;
-                }
-            }
-
-            List<StaticBlock> staticBlocks = null;
-
-            if (gameData.StaticBlocksPositions != null && gameData.StaticBlocksPositions.Count > 0)
-            {
-                staticBlocks = new List<StaticBlock>();
-
-                int staticBlocksIndexCounter = 0;
-
-                foreach (Vector2 pos in gameData.StaticBlocksPositions)
-                {
-                    StaticBlock tempBlock = new StaticBlock(indexCounter, this.staticBlocks[staticBlocksIndexCounter], gameBoardGrid[(int)pos.x, (int)pos.y]);
-                    staticBlocks.Add(tempBlock);
-                    indexCounter++;
-                    staticBlocksIndexCounter++;
-                }
-            }
-
-            Stack<GameplayStep> allStepsContainer = new Stack<GameplayStep>();
-            allStepsContainer.Push(new GameplayStep(0, EDirection.None, allBlocksPositions));
-
-            currentGame = new SingleGame(gameBoardGrid, gameData.Id, gameDataDynamic.BestSteps, gameDataDynamic.BestCoins, gameData.StepsMinimumCount, gameDataDynamic.GameCount, redTileBlocks, mobileBlocks, staticBlocks, allStepsContainer);
-        }
-        else if (gameData.IsDoubleGame)
-        {
-            int indexCounter = 1;
-
-            SortedDictionary<int, Vector2> allBlocksPositions = new SortedDictionary<int, Vector2>();
-            
-            List<TileBlock> redTileBlocks = new List<TileBlock>();
-            foreach (var stonePosition in gameData.RedTileBlocksPositions)
-            {
-                redTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(inscriptionRed), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
+                redTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(redTileBlock), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
                 allBlocksPositions.Add(indexCounter, stonePosition);
                 indexCounter++;
             }
@@ -190,73 +128,7 @@ public class GameplayManager : MonoBehaviour, IGridElementObjectProvider
             List<TileBlock> blueTileBlocks = new List<TileBlock>();
             foreach (var stonePosition in gameData.BlueTileBlocksPositions)
             {
-                blueTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(inscriptionBlue), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
-                allBlocksPositions.Add(indexCounter, stonePosition);
-                indexCounter++;
-            }
-
-            List<MobileBlock> mobileBlocks = null;
-
-            if (gameData.MobileBlocksPositions != null && gameData.MobileBlocksPositions.Count > 0)
-            {
-                mobileBlocks = new List<MobileBlock>();
-
-                int mobileBlocksIndexCounter = 0;
-
-                foreach (Vector2 pos in gameData.MobileBlocksPositions)
-                {
-                    MobileBlock tempBlock = new MobileBlock(indexCounter, this.mobileBlocks[mobileBlocksIndexCounter], gameBoardGrid[(int)pos.x, (int)pos.y]);
-                    mobileBlocks.Add(tempBlock);
-                    allBlocksPositions.Add(indexCounter, pos);
-                    indexCounter++;
-                    mobileBlocksIndexCounter++;
-                }
-            }
-
-            List<StaticBlock> staticBlocks = null;
-
-            if (gameData.StaticBlocksPositions != null && gameData.StaticBlocksPositions.Count > 0)
-            {
-                staticBlocks = new List<StaticBlock>();
-
-                int staticBlocksIndexCounter = 0;
-
-                foreach (Vector2 pos in gameData.StaticBlocksPositions)
-                {
-                    StaticBlock tempBlock = new StaticBlock(indexCounter, this.staticBlocks[staticBlocksIndexCounter], gameBoardGrid[(int)pos.x, (int)pos.y]);
-                    staticBlocks.Add(tempBlock);
-                    indexCounter++;
-                    staticBlocksIndexCounter++;
-                }
-            }
-
-            Stack<GameplayStep> allStepsContainer = new Stack<GameplayStep>();
-            allStepsContainer.Push(new GameplayStep(0, EDirection.None, allBlocksPositions));
-
-            currentGame = new DoubleGame(gameBoardGrid, gameData.Id, gameDataDynamic.BestSteps, gameDataDynamic.BestCoins, gameData.StepsMinimumCount, gameDataDynamic.GameCount, redTileBlocks, blueTileBlocks, mobileBlocks, staticBlocks, allStepsContainer);
-        }
-        else
-        {
-            int indexCounter = 1;
-
-            GameObject inscriptionBlockThird = null;
-            GameObject targetThird = null;
-            ChooseRandomBlock(gameData.Id, out inscriptionBlockThird, out targetThird);
-
-            SortedDictionary<int, Vector2> allBlocksPositions = new SortedDictionary<int, Vector2>();
-
-            List<TileBlock> redTileBlocks = new List<TileBlock>();
-            foreach (var stonePosition in gameData.RedTileBlocksPositions)
-            {
-                redTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(inscriptionRed), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
-                allBlocksPositions.Add(indexCounter, stonePosition);
-                indexCounter++;
-            }
-
-            List<TileBlock> blueTileBlocks = new List<TileBlock>();
-            foreach (var stonePosition in gameData.BlueTileBlocksPositions)
-            {
-                blueTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(inscriptionBlue), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
+                blueTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(blueTileBlock), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
                 allBlocksPositions.Add(indexCounter, stonePosition);
                 indexCounter++;
             }
@@ -264,7 +136,7 @@ public class GameplayManager : MonoBehaviour, IGridElementObjectProvider
             List<TileBlock> greenTileBlocks = new List<TileBlock>();
             foreach (var stonePosition in gameData.GreenTileBlocksPositions)
             {
-                greenTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(inscriptionYellow), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
+                greenTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(greenTileBlock), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
                 allBlocksPositions.Add(indexCounter, stonePosition);
                 indexCounter++;
             }
@@ -275,15 +147,12 @@ public class GameplayManager : MonoBehaviour, IGridElementObjectProvider
             {
                 mobileBlocks = new List<MobileBlock>();
 
-                int mobileBlocksIndexCounter = 0;
-
                 foreach (Vector2 pos in gameData.MobileBlocksPositions)
                 {
-                    MobileBlock tempBlock = new MobileBlock(indexCounter, this.mobileBlocks[mobileBlocksIndexCounter], gameBoardGrid[(int)pos.x, (int)pos.y]);
+                    MobileBlock tempBlock = new MobileBlock(indexCounter, Instantiate(mobileBlock), gameBoardGrid[(int)pos.x, (int)pos.y]);
                     mobileBlocks.Add(tempBlock);
                     allBlocksPositions.Add(indexCounter, pos);
                     indexCounter++;
-                    mobileBlocksIndexCounter++;
                 }
             }
 
@@ -293,14 +162,144 @@ public class GameplayManager : MonoBehaviour, IGridElementObjectProvider
             {
                 staticBlocks = new List<StaticBlock>();
 
-                int staticBlocksIndexCounter = 0;
+                foreach (Vector2 pos in gameData.StaticBlocksPositions)
+                {
+                    StaticBlock tempBlock = new StaticBlock(indexCounter, Instantiate(staticBlock), gameBoardGrid[(int)pos.x, (int)pos.y]);
+                    staticBlocks.Add(tempBlock);
+                    indexCounter++;
+                }
+            }
+
+            Stack<GameplayStep> allStepsContainer = new Stack<GameplayStep>();
+            allStepsContainer.Push(new GameplayStep(0, EDirection.None, allBlocksPositions));
+
+            List<TileBlock> firstTileBlocks = redTileBlocks.Count > 0 ? redTileBlocks : blueTileBlocks.Count > 0 ? blueTileBlocks : greenTileBlocks;
+
+            currentGame = new SingleGame(gameBoardGrid, gameData.Id, gameDataDynamic.BestSteps, gameDataDynamic.BestCoins, gameData.StepsMinimumCount, gameDataDynamic.GameCount, firstTileBlocks, mobileBlocks, staticBlocks, allStepsContainer);
+        }
+        else if (gameData.IsDoubleGame)
+        {
+            int indexCounter = 1;
+
+            SortedDictionary<int, Vector2> allBlocksPositions = new SortedDictionary<int, Vector2>();
+
+            List<TileBlock> redTileBlocks = new List<TileBlock>();
+            foreach (var stonePosition in gameData.RedTileBlocksPositions)
+            {
+                redTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(redTileBlock), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
+                allBlocksPositions.Add(indexCounter, stonePosition);
+                indexCounter++;
+            }
+
+            List<TileBlock> blueTileBlocks = new List<TileBlock>();
+            foreach (var stonePosition in gameData.BlueTileBlocksPositions)
+            {
+                blueTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(blueTileBlock), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
+                allBlocksPositions.Add(indexCounter, stonePosition);
+                indexCounter++;
+            }
+
+            List<TileBlock> greenTileBlocks = new List<TileBlock>();
+            foreach (var stonePosition in gameData.GreenTileBlocksPositions)
+            {
+                greenTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(greenTileBlock), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
+                allBlocksPositions.Add(indexCounter, stonePosition);
+                indexCounter++;
+            }
+
+            List<MobileBlock> mobileBlocks = null;
+
+            if (gameData.MobileBlocksPositions != null && gameData.MobileBlocksPositions.Count > 0)
+            {
+                mobileBlocks = new List<MobileBlock>();
+
+                foreach (Vector2 pos in gameData.MobileBlocksPositions)
+                {
+                    MobileBlock tempBlock = new MobileBlock(indexCounter, Instantiate(mobileBlock), gameBoardGrid[(int)pos.x, (int)pos.y]);
+                    mobileBlocks.Add(tempBlock);
+                    allBlocksPositions.Add(indexCounter, pos);
+                    indexCounter++;
+                }
+            }
+
+            List<StaticBlock> staticBlocks = null;
+
+            if (gameData.StaticBlocksPositions != null && gameData.StaticBlocksPositions.Count > 0)
+            {
+                staticBlocks = new List<StaticBlock>();
 
                 foreach (Vector2 pos in gameData.StaticBlocksPositions)
                 {
-                    StaticBlock tempBlock = new StaticBlock(indexCounter, this.staticBlocks[staticBlocksIndexCounter], gameBoardGrid[(int)pos.x, (int)pos.y]);
+                    StaticBlock tempBlock = new StaticBlock(indexCounter, Instantiate(staticBlock), gameBoardGrid[(int)pos.x, (int)pos.y]);
                     staticBlocks.Add(tempBlock);
                     indexCounter++;
-                    staticBlocksIndexCounter++;
+                }
+            }
+
+            Stack<GameplayStep> allStepsContainer = new Stack<GameplayStep>();
+            allStepsContainer.Push(new GameplayStep(0, EDirection.None, allBlocksPositions));
+
+            List<TileBlock> firstTileBlocks = redTileBlocks.Count > 0 ? redTileBlocks : blueTileBlocks.Count > 0 ? blueTileBlocks : greenTileBlocks;
+            List<TileBlock> secondTileBlocks = redTileBlocks.Count > 0 && firstTileBlocks != redTileBlocks ? redTileBlocks : blueTileBlocks.Count > 0 && blueTileBlocks != redTileBlocks ? blueTileBlocks : greenTileBlocks;
+
+            currentGame = new DoubleGame(gameBoardGrid, gameData.Id, gameDataDynamic.BestSteps, gameDataDynamic.BestCoins, gameData.StepsMinimumCount, gameDataDynamic.GameCount, firstTileBlocks, blueTileBlocks, mobileBlocks, staticBlocks, allStepsContainer);
+        }
+        else
+        {
+            int indexCounter = 1;
+
+            SortedDictionary<int, Vector2> allBlocksPositions = new SortedDictionary<int, Vector2>();
+
+            List<TileBlock> redTileBlocks = new List<TileBlock>();
+            foreach (var stonePosition in gameData.RedTileBlocksPositions)
+            {
+                redTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(redTileBlock), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
+                allBlocksPositions.Add(indexCounter, stonePosition);
+                indexCounter++;
+            }
+
+            List<TileBlock> blueTileBlocks = new List<TileBlock>();
+            foreach (var stonePosition in gameData.BlueTileBlocksPositions)
+            {
+                blueTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(blueTileBlock), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
+                allBlocksPositions.Add(indexCounter, stonePosition);
+                indexCounter++;
+            }
+
+            List<TileBlock> greenTileBlocks = new List<TileBlock>();
+            foreach (var stonePosition in gameData.GreenTileBlocksPositions)
+            {
+                greenTileBlocks.Add(new TileBlock(indexCounter, 0, Instantiate(greenTileBlock), gameBoardGrid[(int)stonePosition.x, (int)stonePosition.y]));
+                allBlocksPositions.Add(indexCounter, stonePosition);
+                indexCounter++;
+            }
+
+            List<MobileBlock> mobileBlocks = null;
+
+            if (gameData.MobileBlocksPositions != null && gameData.MobileBlocksPositions.Count > 0)
+            {
+                mobileBlocks = new List<MobileBlock>();
+
+                foreach (Vector2 pos in gameData.MobileBlocksPositions)
+                {
+                    MobileBlock tempBlock = new MobileBlock(indexCounter, Instantiate(mobileBlock), gameBoardGrid[(int)pos.x, (int)pos.y]);
+                    mobileBlocks.Add(tempBlock);
+                    allBlocksPositions.Add(indexCounter, pos);
+                    indexCounter++;
+                }
+            }
+
+            List<StaticBlock> staticBlocks = null;
+
+            if (gameData.StaticBlocksPositions != null && gameData.StaticBlocksPositions.Count > 0)
+            {
+                staticBlocks = new List<StaticBlock>();
+
+                foreach (Vector2 pos in gameData.StaticBlocksPositions)
+                {
+                    StaticBlock tempBlock = new StaticBlock(indexCounter, Instantiate(staticBlock), gameBoardGrid[(int)pos.x, (int)pos.y]);
+                    staticBlocks.Add(tempBlock);
+                    indexCounter++;
                 }
             }
 
@@ -339,20 +338,6 @@ public class GameplayManager : MonoBehaviour, IGridElementObjectProvider
     private void EndGame()
     {
         ChangeGameplayState(EGameplayState.End);
-    }
-
-    private void ChooseRandomBlock(int gameId, out GameObject currentBlock, out GameObject currentTarget)
-    {
-        if (gameId % 2 == 0)
-        {
-            currentBlock = inscriptionGreen;
-            currentTarget = targetGreen;
-        }
-        else
-        {
-            currentBlock = inscriptionYellow;
-            currentTarget = targetYellow;
-        }
     }
 
     #region Update methods

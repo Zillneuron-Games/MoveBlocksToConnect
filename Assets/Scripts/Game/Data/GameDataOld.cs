@@ -6,23 +6,28 @@ using UnityEngine;
 public class GameDataOld
 {
     public int Id;
-    public int StepsMinimumCount;
+    public string Level;
+    public string Name;
+    public bool Special;
     public List<Vector2> RedTileBlocksPositions;
-    public List<Vector2> BlueTileBlocksPositions;
     public List<Vector2> GreenTileBlocksPositions;
+    public List<Vector2> BlueTileBlocksPositions;
     public List<Vector2> MobileBlocksPositions;
     public List<Vector2> StaticStonesPositions;
+    public EShapeColor[][] BonusShape;
 
     public GameDataOld()
     {
-        Id = 0;
-        StepsMinimumCount = 0;
-
-        RedTileBlocksPositions = null;
-        BlueTileBlocksPositions = null;
-        GreenTileBlocksPositions = null;
-        MobileBlocksPositions = null;
-        StaticStonesPositions = null;
+        this.Id = 0;
+        this.Level = null;
+        this.Name = null;
+        this.Special = false;
+        this.RedTileBlocksPositions = new List<Vector2>();
+        this.BlueTileBlocksPositions = new List<Vector2>();
+        this.GreenTileBlocksPositions = new List<Vector2>();
+        this.MobileBlocksPositions = new List<Vector2>();
+        this.StaticStonesPositions = new List<Vector2>();
+        this.BonusShape = null;
     }
 }
 

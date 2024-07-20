@@ -62,7 +62,7 @@ public static class DataReader
 
         GameDataOld gameDataOld = JsonUtility.FromJson<GameDataOld>(gameInfoJson.text);
         //GameData gameData = JsonUtility.FromJson<GameData>(gameInfoJson.text);
-        GameData gameData = new GameData(gameDataOld.Id, gameDataOld.StepsMinimumCount, gameDataOld.RedTileBlocksPositions, gameDataOld.BlueTileBlocksPositions, gameDataOld.GreenTileBlocksPositions, gameDataOld.MobileBlocksPositions, gameDataOld.StaticStonesPositions);
+        GameData gameData = new GameData(gameDataOld.Id, 8, gameDataOld.RedTileBlocksPositions, gameDataOld.BlueTileBlocksPositions, gameDataOld.GreenTileBlocksPositions, gameDataOld.MobileBlocksPositions, gameDataOld.StaticStonesPositions);
 
         //GameData _game_data = JsonMapper.ToObject<GameData>(_game_info_json.text);
 

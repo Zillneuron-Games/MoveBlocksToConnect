@@ -39,12 +39,22 @@ public class GameData
 
     public bool IsSingleGame
     {
-        get { return BlueTileBlocksPositions.Count == 0 && GreenTileBlocksPositions.Count == 0; }
+        get 
+        {
+            return (BlueTileBlocksPositions.Count > 0 && GreenTileBlocksPositions.Count == 0 && RedTileBlocksPositions.Count == 0)
+                || (BlueTileBlocksPositions.Count == 0 && GreenTileBlocksPositions.Count > 0 && RedTileBlocksPositions.Count == 0)
+                || (BlueTileBlocksPositions.Count == 0 && GreenTileBlocksPositions.Count == 0 && RedTileBlocksPositions.Count > 0);
+        }
     }
 
     public bool IsDoubleGame
     {
-        get { return GreenTileBlocksPositions.Count == 0; }
+        get 
+        {
+            return (BlueTileBlocksPositions.Count > 0 && GreenTileBlocksPositions.Count > 0 && RedTileBlocksPositions.Count == 0)
+              || (BlueTileBlocksPositions.Count > 0 && GreenTileBlocksPositions.Count == 0 && RedTileBlocksPositions.Count > 0)
+              || (BlueTileBlocksPositions.Count == 0 && GreenTileBlocksPositions.Count > 0 && RedTileBlocksPositions.Count > 0);
+        }
     }
 }
 
